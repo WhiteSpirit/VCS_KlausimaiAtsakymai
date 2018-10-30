@@ -251,11 +251,11 @@ public class Main extends Application {
 
 // Trecia scena - nauju klausimu pridejimo langas
 		
-		HBox naujoKlausimoHbox1 = new HBox(klausimoPrierasas, klausimoTekstas);
-		HBox naujoKlausimoHbox2 = new HBox(videoUrlPrierasas, videoUrlTekstas);
-		HBox naujoKlausimoHbox3 = new HBox(paveiksloUrlPrierasas, paveiksloUrlTekstas);
-		HBox naujoKlausimoHbox4 = new HBox(uzuominosPrierasas, uzuominosTekstas);
-		HBox naujoKlausimoHbox5 = new HBox(atsakymoPrierasas, atsakymoTekstas);
+		naujoKlausimoHbox1 = new HBox(klausimoPrierasas, klausimoTekstas);
+		naujoKlausimoHbox2 = new HBox(videoUrlPrierasas, videoUrlTekstas);
+		naujoKlausimoHbox3 = new HBox(paveiksloUrlPrierasas, paveiksloUrlTekstas);
+		naujoKlausimoHbox4 = new HBox(uzuominosPrierasas, uzuominosTekstas);
+		naujoKlausimoHbox5 = new HBox(atsakymoPrierasas, atsakymoTekstas);
 
 		for (int mokytojoNr = 0; mokytojoNr < kambarys.getVisiPasnekovai().size(); mokytojoNr++) {
 			mokytojoPasirinkimas.getItems().add(kambarys.getVisiPasnekovai().get(mokytojoNr));
@@ -280,7 +280,7 @@ public class Main extends Application {
 			}
 		});
 		
-		HBox naujoKlausimoHbox6 = new HBox(mokytojoPasirinkimoPrierasas, mokytojoPasirinkimas);
+		naujoKlausimoHbox6 = new HBox(mokytojoPasirinkimoPrierasas, mokytojoPasirinkimas);
 
 		isejimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -297,7 +297,7 @@ public class Main extends Application {
 			}
 		});
 		
-		VBox naujoKlausimoInformacija = new VBox(klausimoPridejimoInfo, naujoKlausimoHbox1, naujoKlausimoHbox2,
+		naujoKlausimoInformacija = new VBox(klausimoPridejimoInfo, naujoKlausimoHbox1, naujoKlausimoHbox2,
 				naujoKlausimoHbox3, naujoKlausimoHbox4, naujoKlausimoHbox5, naujoKlausimoHbox6, mygtukuDuetas);
 		naujuKlausimuLangas  = new Scene(naujoKlausimoInformacija);
 				

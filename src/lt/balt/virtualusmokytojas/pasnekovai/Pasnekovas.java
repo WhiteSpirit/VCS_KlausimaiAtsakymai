@@ -64,6 +64,14 @@ public class Pasnekovas {
 		return visiKlausimai;
 	}
 
+	public void setVardas(String vardas) {
+		this.vardas = vardas;
+	}
+
+	public void setIsvaizda(String isvaizda) {
+		this.isvaizda = isvaizda;
+	}
+
 	public void setVisiKlausimai(ArrayList<Klausimas> visiKlausimai) {
 		this.visiKlausimai = visiKlausimai;
 	}
