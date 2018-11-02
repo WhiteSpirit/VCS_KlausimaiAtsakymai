@@ -11,7 +11,7 @@
 	-fx-border-color: black;
 	-fx-border-radius: 30 4 30 4;
 	-fx-background-color: linear-gradient(to right, white, gray, white);
-	-fx-text-fill: brown;
+	-fx-text-fill: #1f1f60;
 	-fx-text-align: center;
     -fx-font-size: 16px;
 	-fx-font-weight: bold;
@@ -20,7 +20,7 @@
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(to right, white, green, white);
+    -fx-background-color: linear-gradient(to right, white, #204060, white);
 }
 
 .label {
@@ -56,4 +56,42 @@
 	-fx-border-style: solid;
 	-fx-border-width: 1;
 	-fx-border-color: black;
+}
+
+.scroll-pane {
+    -fx-background-color: #ebebeb;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: #ebebeb;
+}
+
+ .scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color:transparent;
+}
+
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+    -fx-background-color: white;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-border-width: 1;
+	-fx-border-color: gray;
+    -fx-background-radius: 4;
+    
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to bottom, white, gray, white);
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(to right, white, gray, white);
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: #ebebeb;
+    -fx-border-width: 1;
+	-fx-border-color: gray;
+    -fx-background-radius: 5;
 }

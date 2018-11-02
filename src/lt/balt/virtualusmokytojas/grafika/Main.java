@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -50,8 +52,8 @@ public class Main extends Application {
 	private File pasnekovoIsvaizda;
 	private Image image;
 	private ImageView imageView;
-	private VBox paveikslelioLangas = new VBox();
-	
+	VBox paveikslelioLangas = new VBox();
+		
 //--- --- --- --- --- --- ---
 
 	public static void main(String[] args) {
@@ -92,7 +94,7 @@ public class Main extends Application {
 
 		HBox hbox1 = new HBox(pabendravimoMygtukas, naujoKlausimoMygtukas, programosUzdarymoMygtukas);
 		pradinisLangas = new Scene(hbox1);
-
+		
 // Antra scena - klausimu ir atsakymu langas
 		
 		rodytiKlausimoPapildomaInformacija();
@@ -153,9 +155,9 @@ public class Main extends Application {
 			pasnekovoIsvaizda = new File(dabartinisPasnekovas.getIsvaizda());
 			image = new Image(pasnekovoIsvaizda.toURI().toString());
 			imageView = new ImageView(image);
-			paveikslelioLangas.getChildren().add(imageView);
+			paveikslelioLangas = new VBox(imageView);
 		} catch (Exception ePasnekovoIsvaizda) {
-			paveikslelioLangas.getChildren().add(new Label("Puikiai atrodantis pašnekovas"));
+			paveikslelioLangas = new VBox(new Label("Puikiai atrodantis pašnekovas"));
 		}
 
 		Label pasnekovoKortele = new Label("Pabendrauti su kitu pašnekovu:");
@@ -203,7 +205,13 @@ public class Main extends Application {
 		vbox22.getChildren().addAll(paveikslelioLangas, pasnekovoKortele, pasnekovoPasirinkimas, atsisveikinimoMygtukas);
 		HBox hbox2 = new HBox(vbox21, vbox22);
 		
-		klausimuLangas = new Scene(hbox2);
+	    ScrollPane scrollPane = new ScrollPane();
+	    scrollPane.setContent(hbox2);
+	    scrollPane.setPannable(true);
+	    scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+	    scrollPane.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+
+		klausimuLangas = new Scene(scrollPane);
 
 // Trecia scena - nauju klausimu pridejimo langas
 		
@@ -271,8 +279,15 @@ public class Main extends Application {
 		VBox naujoKlausimoInformacija = new VBox(5);
 		naujoKlausimoInformacija = new VBox(klausimoPridejimoInfo, naujoKlausimoHbox1, naujoKlausimoHbox2,
 				naujoKlausimoHbox3, naujoKlausimoHbox4, naujoKlausimoHbox5, naujoKlausimoHbox6, mygtukuDuetas);
-		naujuKlausimuLangas  = new Scene(naujoKlausimoInformacija);
-				
+
+	    ScrollPane scrollPane2 = new ScrollPane();
+	    scrollPane2.setContent(naujoKlausimoInformacija);
+	    scrollPane2.setPannable(true);
+	    scrollPane2.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+	    scrollPane2.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+	    
+		naujuKlausimuLangas  = new Scene(scrollPane2);
+		
 		primaryStage.setScene(pradinisLangas);
 		primaryStage.show();
 	}
