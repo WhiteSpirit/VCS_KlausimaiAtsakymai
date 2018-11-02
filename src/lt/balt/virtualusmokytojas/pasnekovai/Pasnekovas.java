@@ -6,7 +6,7 @@ import lt.balt.virtualusmokytojas.Klausimas;
 public class Pasnekovas {
 
 	private String vardas = "Pasnekovas";
-	private String isvaizda = "src/lt/balt/virtualusmokytojas/grafika/paveiksleliai/PasnekovasSenolis.jpg";
+	private String isvaizda = "resources/images/PasnekovasSenolis.jpg";
 	private ArrayList<Klausimas> visiKlausimai;
 
 	public Pasnekovas() {

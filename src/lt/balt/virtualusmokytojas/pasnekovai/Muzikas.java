@@ -7,7 +7,7 @@ public class Muzikas extends Pasnekovas {
 	public Muzikas() {
 		super.setVisiKlausimai(KlausimuKlase.getKlausimaiMuzikui());
 		super.setVardas("Muzikas");
-		super.setIsvaizda("src/lt/balt/virtualusmokytojas/grafika/paveiksleliai/PasnekovasMuzikas.jpg");
+		super.setIsvaizda("resources/images/PasnekovasMuzikas.jpg");
 	}
 
 }

@@ -1,6 +1,7 @@
 package lt.balt.virtualusmokytojas.grafika;
 
 import java.io.File;
+import java.net.*;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,26 +28,14 @@ import lt.balt.virtualusmokytojas.pasnekovai.Pasnekovas;
 import lt.balt.virtualusmokytojas.Klausimas;
 
 public class Main extends Application {
-
+	
 	private Scene pradinisLangas, klausimuLangas, naujuKlausimuLangas;
 	
 	private PokalbiuKambarys kambarys = new PokalbiuKambarys();
 	private Pasnekovas dabartinisPasnekovas = kambarys.isrinktiAtsitiktiniPasnekova();
 	private Klausimas dabartinisKlausimas = dabartinisPasnekovas.isrinktiAtsitiktiniKlausima();
 
-//--- Pirmos scenos kintamieji ---
-
-	private Button pabendravimoMygtukas = new Button("PABENDRAUKIME");
-	private Button naujoKlausimoMygtukas = new Button("PRIDĖTI SAVO KLAUSIMĄ");
-	private Button programosUzdarymoMygtukas = new Button("UŽDARYTI PROGRAMĄ");
-
-	private HBox hbox1 = new HBox(pabendravimoMygtukas, naujoKlausimoMygtukas, programosUzdarymoMygtukas);
-
-//--- Antros scenos kintamieji ---
-
 	private Label klausimoKortele = new Label(dabartinisKlausimas.getKlausimoFormuluote());
-	private VBox vbox211 = new VBox();
-	
 	private String videoUrl = dabartinisKlausimas.getPapildomaInformacija();
 	private Media media;
 	private MediaPlayer mediaPlayer;
@@ -58,63 +47,12 @@ public class Main extends Application {
 	private boolean textOn = false;
 	private VBox videoLangas = new VBox(alternativeText);
 	
-	private Button kitoKlausimoMygtukas = new Button("Kitas klausimas");
-	private Button uzuominosMygtukas = new Button("Užuomina");
-	private Button atsakymoMygtukas = new Button("Atsakymas");
-	private HBox mygtukuTrio = new HBox(kitoKlausimoMygtukas, uzuominosMygtukas, atsakymoMygtukas);
-	private VBox vbox212 = new VBox();
-	
-	private Button klausimoTrynimoMygtukas = new Button("Ištrinti klausimą");
-	private Button klausimoPridejimoMygtukas = new Button("Pridėti naują klausimą");
-	private VBox vbox213 = new VBox(15);
-	
 	private File pasnekovoIsvaizda;
 	private Image image;
 	private ImageView imageView;
 	private VBox paveikslelioLangas = new VBox();
-	private Label pasnekovoKortele = new Label("Pabendrauti su kitu pašnekovu:");
-	private ChoiceBox<Pasnekovas> pasnekovoPasirinkimas = new ChoiceBox<Pasnekovas>();
-	private Button atsisveikinimoMygtukas = new Button("Atsisveikinti");
-
-	private VBox vbox21 = new VBox(15);
-	private VBox vbox22 = new VBox(15);
-	private HBox hbox2 = new HBox();
-
-//--- Trecios scenos kintamieji ---
 	
-	private Label klausimoPridejimoInfo = new Label("Pridėkite savo klausimą:");
-	
-	private Label klausimoPrierasas = new Label("Klausimas:");
-	private TextField klausimoTekstas = new TextField("Rašykite klausimą");
-	private HBox naujoKlausimoHbox1;
-	
-	private Label videoUrlPrierasas = new Label("Video nuoroda:");
-	private TextField videoUrlTekstas = new TextField("Pridėkite video nuorodą");
-	private HBox naujoKlausimoHbox2;
-	
-	private Label paveiksloUrlPrierasas = new Label("Paveikslėlio nuoroda:");
-	private TextField paveiksloUrlTekstas = new TextField("Pridėkite paveikslėlio nuorodą");
-	private HBox naujoKlausimoHbox3;
-	
-	private Label uzuominosPrierasas = new Label("Užuomina:");
-	private TextField uzuominosTekstas = new TextField("Rašykite užuominą");
-	private HBox naujoKlausimoHbox4;
-	
-	private Label atsakymoPrierasas = new Label("Atsakymas:");
-	private TextField atsakymoTekstas = new TextField("Rašykite atsakymą");
-	private HBox naujoKlausimoHbox5;
-	
-	private Label mokytojoPasirinkimoPrierasas = new Label("Pašnekovas:");
-	private ChoiceBox<Pasnekovas> mokytojoPasirinkimas = new ChoiceBox<Pasnekovas>();
-	private HBox naujoKlausimoHbox6;
-	
-	private Button issaugojimoMygtukas = new Button("Išsaugoti klausimą");
-	private Button isejimoMygtukas = new Button("Išeiti");
-	private HBox mygtukuDuetas = new HBox(issaugojimoMygtukas, isejimoMygtukas);
-	
-	private VBox naujoKlausimoInformacija = new VBox(5);
-	
-//--- --- ---
+//--- --- --- --- --- --- ---
 
 	public static void main(String[] args) {
 		launch(args);
@@ -122,12 +60,13 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
-		Application.setUserAgentStylesheet(getClass().getResource("mokytojas.css").toExternalForm());
+
+		Application.setUserAgentStylesheet(getClass().getClassLoader().getResource("mokytojas.css").toExternalForm());
 		primaryStage.setTitle("Virtualus Chroniškas Klausinėtojas su jumis");
 
-// Pirma scena - pradinis startinis langas		
-
+// Pirma scena - pradinis startinis langas
+		
+		Button pabendravimoMygtukas = new Button("PABENDRAUKIME");
 		pabendravimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -135,6 +74,7 @@ public class Main extends Application {
 			}
 		});
 
+		Button naujoKlausimoMygtukas = new Button("PRIDĖTI SAVO KLAUSIMĄ");
 		naujoKlausimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -142,6 +82,7 @@ public class Main extends Application {
 			}
 		});
 
+		Button programosUzdarymoMygtukas = new Button("UŽDARYTI PROGRAMĄ");
 		programosUzdarymoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -149,12 +90,14 @@ public class Main extends Application {
 			}
 		});
 
-		this.pradinisLangas = new Scene(hbox1);
+		HBox hbox1 = new HBox(pabendravimoMygtukas, naujoKlausimoMygtukas, programosUzdarymoMygtukas);
+		pradinisLangas = new Scene(hbox1);
 
 // Antra scena - klausimu ir atsakymu langas
 		
 		rodytiKlausimoPapildomaInformacija();
 
+		Button kitoKlausimoMygtukas = new Button("Kitas klausimas");
 		kitoKlausimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -162,6 +105,7 @@ public class Main extends Application {
 			}
 		});
 
+		Button uzuominosMygtukas = new Button("Užuomina");
 		uzuominosMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -170,6 +114,7 @@ public class Main extends Application {
 			}
 		});
 
+		Button atsakymoMygtukas = new Button("Atsakymas");
 		atsakymoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -178,6 +123,9 @@ public class Main extends Application {
 			}
 		});
 		
+		HBox mygtukuTrio = new HBox(kitoKlausimoMygtukas, uzuominosMygtukas, atsakymoMygtukas);
+		
+		Button klausimoTrynimoMygtukas = new Button("Ištrinti klausimą");
 		klausimoTrynimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -187,12 +135,13 @@ public class Main extends Application {
 					dabartinisPasnekovas.getVisiKlausimai().remove(dabartinisKlausimas);
 					uzduotiKitaKlausima();
 				} else {
-					alternativeText.setText("Tai paskutinis šio pašnekovo klausimas. Prieš trinant šį klausimą, prašome pašnekovui pridėti naujų klausimų.");
+					alternativeText.setText("Tai paskutinis šio pašnekovo klausimas.\nPrieš trinant šį klausimą, prašome pašnekovui pridėti naujų klausimų.");
 					textOn = true;
 				}
 			}
 		});
 
+		Button klausimoPridejimoMygtukas = new Button("Pridėti naują klausimą");
 		klausimoPridejimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -209,12 +158,16 @@ public class Main extends Application {
 			paveikslelioLangas.getChildren().add(new Label("Puikiai atrodantis pašnekovas"));
 		}
 
+		Label pasnekovoKortele = new Label("Pabendrauti su kitu pašnekovu:");
+		
+		ChoiceBox<Pasnekovas> pasnekovoPasirinkimas = new ChoiceBox<Pasnekovas>();
+		ChoiceBox<Pasnekovas> mokytojoPasirinkimas = new ChoiceBox<Pasnekovas>();
+		
 		for (int pasnekovoNr = 0; pasnekovoNr < kambarys.getVisiPasnekovai().size(); pasnekovoNr++) {
 			pasnekovoPasirinkimas.getItems().add(kambarys.getVisiPasnekovai().get(pasnekovoNr));
 		}
 
 		pasnekovoPasirinkimas.getSelectionModel().select(dabartinisPasnekovas);
-		
 		pasnekovoPasirinkimas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pasnekovas>() {
 			@Override
 			public void changed(ObservableValue<? extends Pasnekovas> observable, Pasnekovas oldValue,
@@ -232,6 +185,7 @@ public class Main extends Application {
 			}
 		});
 	
+		Button atsisveikinimoMygtukas = new Button("Atsisveikinti");
 		atsisveikinimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -239,30 +193,44 @@ public class Main extends Application {
 			}
 		});
 
-		vbox211.getChildren().add(klausimoKortele);
-		vbox212.getChildren().addAll(videoLangas, mygtukuTrio);
+		VBox vbox211 = new VBox(klausimoKortele);
+		VBox vbox212 = new VBox(videoLangas, mygtukuTrio);
+		VBox vbox213 = new VBox(15);
 		vbox213.getChildren().addAll(klausimoTrynimoMygtukas, klausimoPridejimoMygtukas);
-		
+		VBox vbox21 = new VBox(15);
 		vbox21.getChildren().addAll(vbox211, vbox212, vbox213);
+		VBox vbox22 = new VBox(15);
 		vbox22.getChildren().addAll(paveikslelioLangas, pasnekovoKortele, pasnekovoPasirinkimas, atsisveikinimoMygtukas);
-		hbox2.getChildren().addAll(vbox21, vbox22);
+		HBox hbox2 = new HBox(vbox21, vbox22);
 		
 		klausimuLangas = new Scene(hbox2);
 
 // Trecia scena - nauju klausimu pridejimo langas
 		
-		naujoKlausimoHbox1 = new HBox(klausimoPrierasas, klausimoTekstas);
-		naujoKlausimoHbox2 = new HBox(videoUrlPrierasas, videoUrlTekstas);
-		naujoKlausimoHbox3 = new HBox(paveiksloUrlPrierasas, paveiksloUrlTekstas);
-		naujoKlausimoHbox4 = new HBox(uzuominosPrierasas, uzuominosTekstas);
-		naujoKlausimoHbox5 = new HBox(atsakymoPrierasas, atsakymoTekstas);
+		Label klausimoPridejimoInfo = new Label("Pridėkite savo klausimą:");
+		Label klausimoPrierasas = new Label("Klausimas:");
+		TextField klausimoTekstas = new TextField("Rašykite klausimą");
+		Label videoUrlPrierasas = new Label("Video nuoroda:");
+		TextField videoUrlTekstas = new TextField("Pridėkite video nuorodą");
+		Label paveiksloUrlPrierasas = new Label("Paveikslėlio nuoroda:");
+		TextField paveiksloUrlTekstas = new TextField("Pridėkite paveikslėlio nuorodą");
+		Label uzuominosPrierasas = new Label("Užuomina:");
+		TextField uzuominosTekstas = new TextField("Rašykite užuominą");
+		Label atsakymoPrierasas = new Label("Atsakymas:");
+		TextField atsakymoTekstas = new TextField("Rašykite atsakymą");
+		Label mokytojoPasirinkimoPrierasas = new Label("Pašnekovas:");
+		
+		HBox naujoKlausimoHbox1 = new HBox(klausimoPrierasas, klausimoTekstas);
+		HBox naujoKlausimoHbox2 = new HBox(videoUrlPrierasas, videoUrlTekstas);
+		HBox naujoKlausimoHbox3 = new HBox(paveiksloUrlPrierasas, paveiksloUrlTekstas);
+		HBox naujoKlausimoHbox4 = new HBox(uzuominosPrierasas, uzuominosTekstas);
+		HBox naujoKlausimoHbox5 = new HBox(atsakymoPrierasas, atsakymoTekstas);
 
 		for (int mokytojoNr = 0; mokytojoNr < kambarys.getVisiPasnekovai().size(); mokytojoNr++) {
 			mokytojoPasirinkimas.getItems().add(kambarys.getVisiPasnekovai().get(mokytojoNr));
 		}
 		
 		mokytojoPasirinkimas.getSelectionModel().select(dabartinisPasnekovas);
-		
 		mokytojoPasirinkimas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pasnekovas>() {
 			@Override
 			public void changed(ObservableValue<? extends Pasnekovas> observable, Pasnekovas oldValue,
@@ -280,8 +248,9 @@ public class Main extends Application {
 			}
 		});
 		
-		naujoKlausimoHbox6 = new HBox(mokytojoPasirinkimoPrierasas, mokytojoPasirinkimas);
+		HBox naujoKlausimoHbox6 = new HBox(mokytojoPasirinkimoPrierasas, mokytojoPasirinkimas);
 
+		Button isejimoMygtukas = new Button("Išeiti");
 		isejimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -289,6 +258,7 @@ public class Main extends Application {
 			}
 		});
 		
+		Button issaugojimoMygtukas = new Button("Išsaugoti klausimą");
 		issaugojimoMygtukas.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -297,6 +267,8 @@ public class Main extends Application {
 			}
 		});
 		
+		HBox mygtukuDuetas = new HBox(issaugojimoMygtukas, isejimoMygtukas);
+		VBox naujoKlausimoInformacija = new VBox(5);
 		naujoKlausimoInformacija = new VBox(klausimoPridejimoInfo, naujoKlausimoHbox1, naujoKlausimoHbox2,
 				naujoKlausimoHbox3, naujoKlausimoHbox4, naujoKlausimoHbox5, naujoKlausimoHbox6, mygtukuDuetas);
 		naujuKlausimuLangas  = new Scene(naujoKlausimoInformacija);
@@ -309,17 +281,34 @@ public class Main extends Application {
 	
 	private void isvalytiKlausimoPapildomosInformacijosLaukus() {
 		if (videoOn) {
-			mediaPlayer.stop();
-			videoOn = false;
+			isvalytiPapildomosInformacijosVideoLaukus();
 		}
 		if (imageOn) {
-			alternativeImageView.setVisible(false);
-			imageOn = false;
+			isvalytiPapildomosInformacijosPaveiksleliuLaukus();
 		}
 		if (textOn) {
-			alternativeText.setText("");
-			textOn = false;
+			isvalytiPapildomosInformacijosTekstuLaukus();
 		}
+	}
+	
+	private void isvalytiPapildomosInformacijosVideoLaukus() {
+		mediaPlayer.stop();
+		mediaView.setVisible(false);
+		mediaView.setFitWidth(10);
+		mediaView.setFitHeight(10);
+		videoOn = false;
+	}
+	
+	private void isvalytiPapildomosInformacijosPaveiksleliuLaukus() {
+		alternativeImageView.setVisible(false);
+		alternativeImageView.setFitWidth(10);
+		alternativeImageView.setFitHeight(10);
+		imageOn = false;
+	}
+	
+	private void isvalytiPapildomosInformacijosTekstuLaukus() {
+		alternativeText.setText("");
+		textOn = false;
 	}
 
 	private void rodytiKlausimoPapildomaInformacija() {
@@ -327,15 +316,37 @@ public class Main extends Application {
 			alternativeText.setText("Papildomos informacijos nėra.");
 			textOn = true;
 		} else {
+			
 			try {
-				videoUrl = dabartinisKlausimas.getPapildomaInformacija();
-				media = new Media(videoUrl);
+				URI myURI = new URI(videoUrl);
+				media = new Media(myURI.toString());
 				mediaPlayer = new MediaPlayer(media);
 				if (mediaView == null) {
 				mediaView = new MediaView(mediaPlayer);
 				mediaView.setPreserveRatio(true);
 				}
 				else {mediaView.setMediaPlayer(mediaPlayer);}
+				mediaView.setFitWidth(600);
+				mediaView.setFitHeight(360);				
+				if (!videoLangas.getChildren().contains(mediaView)) {
+					videoLangas.getChildren().add(mediaView);
+				}
+				mediaView.setVisible(true);
+				mediaPlayer.play();
+				videoOn = true;
+			} catch (Exception netMedia) {
+			
+			try {
+				File mFile = new File(videoUrl);
+				media = new Media(mFile.toURI().toString());
+				mediaPlayer = new MediaPlayer(media);
+				if (mediaView == null) {
+				mediaView = new MediaView(mediaPlayer);
+				mediaView.setPreserveRatio(true);
+				}
+				else {mediaView.setMediaPlayer(mediaPlayer);}
+				mediaView.setFitWidth(600);
+				mediaView.setFitHeight(360);				
 				if (!videoLangas.getChildren().contains(mediaView)) {
 					videoLangas.getChildren().add(mediaView);
 				}
@@ -344,9 +355,24 @@ public class Main extends Application {
 				videoOn = true;
 			} catch (Exception eMedia) {
 				
-				
-				
-				
+				try {
+					URI myURI = new URI(videoUrl);
+					Image iImage = new Image(myURI.toString());
+					if (alternativeImageView == null) {
+						alternativeImageView = new ImageView(iImage);
+						alternativeImageView.setPreserveRatio(true);
+					} else {
+						alternativeImageView.setImage(iImage);
+					}
+					alternativeImageView.setFitWidth(600);
+					alternativeImageView.setFitHeight(360);
+					if (!videoLangas.getChildren().contains(alternativeImageView)) {
+						videoLangas.getChildren().add(alternativeImageView);
+					}
+					alternativeImageView.setVisible(true);
+					imageOn = true;
+					} catch (Exception netImage){
+						
 				try {
 					File iFile = new File(videoUrl);
 					Image iImage = new Image(iFile.toURI().toString());
@@ -364,19 +390,21 @@ public class Main extends Application {
 					alternativeImageView.setVisible(true);
 					imageOn = true;
 				} catch (Exception eImage) {
+					
 					try {
 						alternativeText.setText(videoUrl);
 						textOn = true;
 					} catch (Exception eText) {
+						
+						
+						
 						alternativeText.setText("Papildomos informacijos nėra.");
 						textOn = true;
+					
 					}
 				}
-				
-				
-				
-				
-				
+					} 
+				}
 			}
 		}
 	}

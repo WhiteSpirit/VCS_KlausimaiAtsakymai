@@ -7,7 +7,7 @@ public class Stiuardese extends Pasnekovas {
 	public Stiuardese() {
 		super.setVisiKlausimai(KlausimuKlase.getKlausimaiStiuardesei());
 		super.setVardas("Stiuardesė");
-		super.setIsvaizda("src/lt/balt/virtualusmokytojas/grafika/paveiksleliai/PasnekoveStiuardese.jpg");
+		super.setIsvaizda("resources/images/PasnekoveStiuardese.jpg");
 	}
 
 }

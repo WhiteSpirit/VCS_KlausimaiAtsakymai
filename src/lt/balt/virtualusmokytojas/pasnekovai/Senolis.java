@@ -7,7 +7,7 @@ public class Senolis extends Pasnekovas {
 	public Senolis() {
 		super.setVisiKlausimai(KlausimuKlase.getKlausimaiSenoliui());
 		super.setVardas("Senolis");
-		super.setIsvaizda("src/lt/balt/virtualusmokytojas/grafika/paveiksleliai/PasnekovasSenolis.jpg");
+		super.setIsvaizda("resources/images/PasnekovasSenolis.jpg");
 	}
 
 }

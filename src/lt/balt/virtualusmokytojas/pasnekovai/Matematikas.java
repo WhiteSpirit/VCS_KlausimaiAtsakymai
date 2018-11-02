@@ -7,7 +7,7 @@ public class Matematikas extends Pasnekovas {
 	public Matematikas() {
 		super.setVisiKlausimai(KlausimuKlase.getKlausimaiMatematikui());
 		super.setVardas("Matematikas");
-		super.setIsvaizda("src/lt/balt/virtualusmokytojas/grafika/paveiksleliai/PasnekovasMatematikas.jpg");
+		super.setIsvaizda("resources/images/PasnekovasMatematikas.jpg");
 	}
 
 }
