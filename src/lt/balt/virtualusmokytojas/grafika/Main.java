@@ -53,7 +53,10 @@ public class Main extends Application {
 	private Image image;
 	private ImageView imageView;
 	VBox paveikslelioLangas = new VBox();
-		
+	
+	private Image imagePrieNaujuKlausimu;
+	private ImageView imageViewPrieNaujuKlausimu;
+			
 //--- --- --- --- --- --- ---
 
 	public static void main(String[] args) {
@@ -280,8 +283,17 @@ public class Main extends Application {
 		naujoKlausimoInformacija = new VBox(klausimoPridejimoInfo, naujoKlausimoHbox1, naujoKlausimoHbox2,
 				naujoKlausimoHbox3, naujoKlausimoHbox4, naujoKlausimoHbox5, naujoKlausimoHbox6, mygtukuDuetas);
 
+		HBox naujoKlausimoInformacijaSuPaveiksleliu = new HBox();
+		try {
+			imagePrieNaujuKlausimu = new Image(new File("resources/images/DelnasPrieFormos.jpg").toURI().toString());
+			imageViewPrieNaujuKlausimu = new ImageView(imagePrieNaujuKlausimu);
+			naujoKlausimoInformacijaSuPaveiksleliu = new HBox(naujoKlausimoInformacija, imageViewPrieNaujuKlausimu);
+		} catch (Exception eImagePrieNaujuKlausimu) {
+			naujoKlausimoInformacijaSuPaveiksleliu = new HBox(naujoKlausimoInformacija);
+		}
+
 	    ScrollPane scrollPane2 = new ScrollPane();
-	    scrollPane2.setContent(naujoKlausimoInformacija);
+	    scrollPane2.setContent(naujoKlausimoInformacijaSuPaveiksleliu);
 	    scrollPane2.setPannable(true);
 	    scrollPane2.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 	    scrollPane2.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);

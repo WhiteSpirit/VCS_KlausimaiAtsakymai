@@ -5,8 +5,8 @@ import lt.balt.virtualusmokytojas.KlausimuKlase;
 public class Senolis extends Pasnekovas {
 
 	public Senolis() {
-		super.setVisiKlausimai(KlausimuKlase.getKlausimaiSenoliui());
 		super.setVardas("Senolis");
+		super.setVisiKlausimai(KlausimuKlase.gautiKlausimusPasnekovuiIsDB(this.getVardas()));
 		super.setIsvaizda("resources/images/PasnekovasSenolis.jpg");
 	}
 

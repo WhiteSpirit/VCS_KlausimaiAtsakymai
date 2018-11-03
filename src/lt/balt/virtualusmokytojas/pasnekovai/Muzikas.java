@@ -5,8 +5,8 @@ import lt.balt.virtualusmokytojas.KlausimuKlase;
 public class Muzikas extends Pasnekovas {
 
 	public Muzikas() {
-		super.setVisiKlausimai(KlausimuKlase.getKlausimaiMuzikui());
 		super.setVardas("Muzikas");
+		super.setVisiKlausimai(KlausimuKlase.gautiKlausimusPasnekovuiIsDB(this.getVardas()));
 		super.setIsvaizda("resources/images/PasnekovasMuzikas.jpg");
 	}
 
