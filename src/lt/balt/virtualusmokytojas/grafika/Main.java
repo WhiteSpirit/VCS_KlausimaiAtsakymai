@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import lt.balt.virtualusmokytojas.PokalbiuKambarys;
 import lt.balt.virtualusmokytojas.pasnekovai.Pasnekovas;
 import lt.balt.virtualusmokytojas.Klausimas;
+import lt.balt.virtualusmokytojas.KlausimuKlase;
 
 public class Main extends Application {
 	
@@ -138,6 +139,7 @@ public class Main extends Application {
 					alternativeText.setText("Klausimas trinamas");
 					textOn = true;
 					dabartinisPasnekovas.getVisiKlausimai().remove(dabartinisKlausimas);
+					KlausimuKlase.istrintiKlausimaIsDB(dabartinisKlausimas);
 					uzduotiKitaKlausima();
 				} else {
 					alternativeText.setText("Tai paskutinis šio pašnekovo klausimas.\nPrieš trinant šį klausimą, prašome pašnekovui pridėti naujų klausimų.");
@@ -275,6 +277,7 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				Klausimas pridedamasKlausimas = new Klausimas(klausimoTekstas.getText(), videoUrlTekstas.getText(), uzuominosTekstas.getText(), atsakymoTekstas.getText(), dabartinisPasnekovas.getVardas());
 				dabartinisPasnekovas.getVisiKlausimai().add(pridedamasKlausimas);
+				KlausimuKlase.itrauktiKlausimaIDB(pridedamasKlausimas);
 			}
 		});
 		
@@ -343,18 +346,19 @@ public class Main extends Application {
 			alternativeText.setText("Papildomos informacijos nėra.");
 			textOn = true;
 		} else {
-			
+
 			try {
 				URI myURI = new URI(videoUrl);
 				media = new Media(myURI.toString());
 				mediaPlayer = new MediaPlayer(media);
 				if (mediaView == null) {
-				mediaView = new MediaView(mediaPlayer);
-				mediaView.setPreserveRatio(true);
+					mediaView = new MediaView(mediaPlayer);
+					mediaView.setPreserveRatio(true);
+				} else {
+					mediaView.setMediaPlayer(mediaPlayer);
 				}
-				else {mediaView.setMediaPlayer(mediaPlayer);}
 				mediaView.setFitWidth(600);
-				mediaView.setFitHeight(360);				
+				mediaView.setFitHeight(360);
 				if (!videoLangas.getChildren().contains(mediaView)) {
 					videoLangas.getChildren().add(mediaView);
 				}
@@ -362,82 +366,86 @@ public class Main extends Application {
 				mediaPlayer.play();
 				videoOn = true;
 			} catch (Exception netMedia) {
-			
-			try {
-				File mFile = new File(videoUrl);
-				media = new Media(mFile.toURI().toString());
-				mediaPlayer = new MediaPlayer(media);
-				if (mediaView == null) {
-				mediaView = new MediaView(mediaPlayer);
-				mediaView.setPreserveRatio(true);
-				}
-				else {mediaView.setMediaPlayer(mediaPlayer);}
-				mediaView.setFitWidth(600);
-				mediaView.setFitHeight(360);				
-				if (!videoLangas.getChildren().contains(mediaView)) {
-					videoLangas.getChildren().add(mediaView);
-				}
-				mediaView.setVisible(true);
-				mediaPlayer.play();
-				videoOn = true;
-			} catch (Exception eMedia) {
-				
+
 				try {
-					URI myURI = new URI(videoUrl);
-					Image iImage = new Image(myURI.toString());
-					if (alternativeImageView == null) {
-						alternativeImageView = new ImageView(iImage);
-						alternativeImageView.setPreserveRatio(true);
+					File mFile = new File(videoUrl);
+					media = new Media(mFile.toURI().toString());
+					mediaPlayer = new MediaPlayer(media);
+					if (mediaView == null) {
+						mediaView = new MediaView(mediaPlayer);
+						mediaView.setPreserveRatio(true);
 					} else {
-						alternativeImageView.setImage(iImage);
+						mediaView.setMediaPlayer(mediaPlayer);
 					}
-					alternativeImageView.setFitWidth(600);
-					alternativeImageView.setFitHeight(360);
-					if (!videoLangas.getChildren().contains(alternativeImageView)) {
-						videoLangas.getChildren().add(alternativeImageView);
+					mediaView.setFitWidth(600);
+					mediaView.setFitHeight(360);
+					if (!videoLangas.getChildren().contains(mediaView)) {
+						videoLangas.getChildren().add(mediaView);
 					}
-					alternativeImageView.setVisible(true);
-					imageOn = true;
-					} catch (Exception netImage){
-						
-				try {
-					File iFile = new File(videoUrl);
-					Image iImage = new Image(iFile.toURI().toString());
-					if (alternativeImageView == null) {
-						alternativeImageView = new ImageView(iImage);
-						alternativeImageView.setPreserveRatio(true);
-					} else {
-						alternativeImageView.setImage(iImage);
-					}
-					alternativeImageView.setFitWidth(600);
-					alternativeImageView.setFitHeight(360);
-					if (!videoLangas.getChildren().contains(alternativeImageView)) {
-						videoLangas.getChildren().add(alternativeImageView);
-					}
-					alternativeImageView.setVisible(true);
-					imageOn = true;
-				} catch (Exception eImage) {
-					
+					mediaView.setVisible(true);
+					mediaPlayer.play();
+					videoOn = true;
+				} catch (Exception eMedia) {
+
 					try {
-						alternativeText.setText(videoUrl);
-						textOn = true;
-					} catch (Exception eText) {
-						
-						
-						
-						alternativeText.setText("Papildomos informacijos nėra.");
-						textOn = true;
-					
+						URI myURI = new URI(videoUrl);
+						Image iImage = new Image(myURI.toString());
+						if (alternativeImageView == null) {
+							alternativeImageView = new ImageView(iImage);
+							alternativeImageView.setPreserveRatio(true);
+						} else {
+							alternativeImageView.setImage(iImage);
+						}
+						alternativeImageView.setFitWidth(600);
+						alternativeImageView.setFitHeight(360);
+						if (!videoLangas.getChildren().contains(alternativeImageView)) {
+							videoLangas.getChildren().add(alternativeImageView);
+						}
+						alternativeImageView.setVisible(true);
+						imageOn = true;
+					} catch (Exception netImage) {
+
+						try {
+							File iFile = new File(videoUrl);
+							Image iImage = new Image(iFile.toURI().toString());
+							if (alternativeImageView == null) {
+								alternativeImageView = new ImageView(iImage);
+								alternativeImageView.setPreserveRatio(true);
+							} else {
+								alternativeImageView.setImage(iImage);
+							}
+							alternativeImageView.setFitWidth(600);
+							alternativeImageView.setFitHeight(360);
+							if (!videoLangas.getChildren().contains(alternativeImageView)) {
+								videoLangas.getChildren().add(alternativeImageView);
+							}
+							alternativeImageView.setVisible(true);
+							imageOn = true;
+						} catch (Exception eImage) {
+
+							try {
+								alternativeText.setText(videoUrl);
+								textOn = true;
+							} catch (Exception eText) {
+
+								alternativeText.setText("Papildomos informacijos nėra.");
+								textOn = true;
+
+							}
+						}
 					}
-				}
-					} 
 				}
 			}
 		}
 	}
 
 	private void uzduotiKitaKlausima() {
-		dabartinisKlausimas = dabartinisPasnekovas.uzduotiKlausima();
+		Klausimas senasKlausimas = dabartinisKlausimas;
+		if (!(dabartinisPasnekovas.getVisiKlausimai().size() <= 1)) {
+			while (dabartinisKlausimas == senasKlausimas) {
+				dabartinisKlausimas = dabartinisPasnekovas.uzduotiKlausima();
+			}
+		} else {dabartinisKlausimas = dabartinisPasnekovas.uzduotiKlausima();}
 		klausimoKortele.setText(dabartinisKlausimas.getKlausimoFormuluote());
 		isvalytiKlausimoPapildomosInformacijosLaukus();
 		videoUrl = dabartinisKlausimas.getPapildomaInformacija();

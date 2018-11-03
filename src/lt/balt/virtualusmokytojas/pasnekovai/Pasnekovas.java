@@ -20,8 +20,7 @@ public class Pasnekovas {
 	}
 
 	public Klausimas uzduotiKlausima() {
-		Klausimas klausimas = isrinktiAtsitiktiniKlausima();
-		return klausimas;
+		return isrinktiAtsitiktiniKlausima();
 	}
 
 	public String pateiktiUzuomina(Klausimas klausimas) {
