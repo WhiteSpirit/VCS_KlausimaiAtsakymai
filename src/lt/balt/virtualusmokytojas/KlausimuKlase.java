@@ -12,8 +12,6 @@ public abstract class KlausimuKlase {
 	private static Connection connection = null;
 	private static Statement statement = null;
 	
-	// http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv
-
 	public static ArrayList<Klausimas> gautiKlausimusPasnekovuiIsDB(String pasnekovoVardas) {
 		ArrayList<Klausimas> klausimaiPasnekovui = new ArrayList<Klausimas>();
 		try {

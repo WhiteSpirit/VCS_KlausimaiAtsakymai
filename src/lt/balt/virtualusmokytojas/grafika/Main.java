@@ -57,7 +57,7 @@ public class Main extends Application {
 	
 	private Image imagePrieNaujuKlausimu;
 	private ImageView imageViewPrieNaujuKlausimu;
-			
+	
 //--- --- --- --- --- --- ---
 
 	public static void main(String[] args) {
@@ -345,7 +345,50 @@ public class Main extends Application {
 		if (videoUrl == null) {
 			alternativeText.setText("Papildomos informacijos nėra.");
 			textOn = true;
-		} else {
+		} else if (videoUrl.startsWith("resources")) {
+
+			try {
+				File mFile = new File(videoUrl);
+				media = new Media(mFile.toURI().toString());
+				mediaPlayer = new MediaPlayer(media);
+				if (mediaView == null) {
+					mediaView = new MediaView(mediaPlayer);
+					mediaView.setPreserveRatio(true);
+				} else {
+					mediaView.setMediaPlayer(mediaPlayer);
+				}
+				mediaView.setFitWidth(600);
+				mediaView.setFitHeight(360);
+				if (!videoLangas.getChildren().contains(mediaView)) {
+					videoLangas.getChildren().add(mediaView);
+				}
+				mediaView.setVisible(true);
+				mediaPlayer.play();
+				videoOn = true;
+			} catch (Exception eMedia) {
+
+				try {
+					File iFile = new File(videoUrl);
+					if (alternativeImageView == null) {
+						alternativeImageView = new ImageView(new Image(iFile.toURI().toString()));
+						alternativeImageView.setPreserveRatio(true);
+					} else {
+						alternativeImageView.setImage(new Image(iFile.toURI().toString()));
+					}
+					alternativeImageView.setFitWidth(600);
+					alternativeImageView.setFitHeight(360);
+					if (!videoLangas.getChildren().contains(alternativeImageView)) {
+						videoLangas.getChildren().add(alternativeImageView);
+					}
+					alternativeImageView.setVisible(true);
+					imageOn = true;
+				} catch (Exception eImage) {
+				}
+
+			}
+		} else if (videoUrl.startsWith("http") && (videoUrl.contains(".mp4") || videoUrl.contains(".avi")
+				|| videoUrl.contains(".mkv") || videoUrl.contains(".wmv") || videoUrl.contains("mov")
+				|| videoUrl.contains("flv") || videoUrl.contains("swf"))) {
 
 			try {
 				URI myURI = new URI(videoUrl);
@@ -366,75 +409,37 @@ public class Main extends Application {
 				mediaPlayer.play();
 				videoOn = true;
 			} catch (Exception netMedia) {
+			}
 
-				try {
-					File mFile = new File(videoUrl);
-					media = new Media(mFile.toURI().toString());
-					mediaPlayer = new MediaPlayer(media);
-					if (mediaView == null) {
-						mediaView = new MediaView(mediaPlayer);
-						mediaView.setPreserveRatio(true);
-					} else {
-						mediaView.setMediaPlayer(mediaPlayer);
-					}
-					mediaView.setFitWidth(600);
-					mediaView.setFitHeight(360);
-					if (!videoLangas.getChildren().contains(mediaView)) {
-						videoLangas.getChildren().add(mediaView);
-					}
-					mediaView.setVisible(true);
-					mediaPlayer.play();
-					videoOn = true;
-				} catch (Exception eMedia) {
+		} else if (videoUrl.startsWith("http")) {
 
-					try {
-						URI myURI = new URI(videoUrl);
-						Image iImage = new Image(myURI.toString());
-						if (alternativeImageView == null) {
-							alternativeImageView = new ImageView(iImage);
-							alternativeImageView.setPreserveRatio(true);
-						} else {
-							alternativeImageView.setImage(iImage);
-						}
-						alternativeImageView.setFitWidth(600);
-						alternativeImageView.setFitHeight(360);
-						if (!videoLangas.getChildren().contains(alternativeImageView)) {
-							videoLangas.getChildren().add(alternativeImageView);
-						}
-						alternativeImageView.setVisible(true);
-						imageOn = true;
-					} catch (Exception netImage) {
-
-						try {
-							File iFile = new File(videoUrl);
-							Image iImage = new Image(iFile.toURI().toString());
-							if (alternativeImageView == null) {
-								alternativeImageView = new ImageView(iImage);
-								alternativeImageView.setPreserveRatio(true);
-							} else {
-								alternativeImageView.setImage(iImage);
-							}
-							alternativeImageView.setFitWidth(600);
-							alternativeImageView.setFitHeight(360);
-							if (!videoLangas.getChildren().contains(alternativeImageView)) {
-								videoLangas.getChildren().add(alternativeImageView);
-							}
-							alternativeImageView.setVisible(true);
-							imageOn = true;
-						} catch (Exception eImage) {
-
-							try {
-								alternativeText.setText(videoUrl);
-								textOn = true;
-							} catch (Exception eText) {
-
-								alternativeText.setText("Papildomos informacijos nėra.");
-								textOn = true;
-
-							}
-						}
-					}
+			try {
+				URI myURI = new URI(videoUrl);
+				Image iImage = new Image(myURI.toString());
+				if (alternativeImageView == null) {
+					alternativeImageView = new ImageView(iImage);
+					alternativeImageView.setPreserveRatio(true);
+				} else {
+					alternativeImageView.setImage(iImage);
 				}
+				alternativeImageView.setFitWidth(600);
+				alternativeImageView.setFitHeight(360);
+				if (!videoLangas.getChildren().contains(alternativeImageView)) {
+					videoLangas.getChildren().add(alternativeImageView);
+				}
+				alternativeImageView.setVisible(true);
+				imageOn = true;
+			} catch (Exception netImage) {
+			}
+
+		} else {
+
+			try {
+				alternativeText.setText(videoUrl);
+				textOn = true;
+			} catch (Exception eText) {
+				alternativeText.setText("Papildomos informacijos nėra.");
+				textOn = true;
 			}
 		}
 	}
